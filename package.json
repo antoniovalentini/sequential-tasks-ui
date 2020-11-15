@@ -16,6 +16,8 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@popperjs/core": "^2.5.4",
+    "jquery": "^3.5.1",
     "sirv-cli": "^1.0.0"
   },
   "repository": {
