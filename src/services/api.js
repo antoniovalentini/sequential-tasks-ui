@@ -12,12 +12,17 @@ const get = async (id) => {
     return await response.json();
 };
 
-const step1 = async () => await snooze(2000);
-const step2 = async () => await snooze(1500);
-const step3 = async () => await snooze(500);
-const step4 = async () => await snooze(500);
+const step1 = async () => await waitAndResult(2000, "SUCCESS");
+const step2 = async () => await waitAndResult(1500, "SUCCESS");
+const step3 = async () => await waitAndResult(500, "KO");
+const step4 = async () => await waitAndResult(500, "SUCCESS");
 
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+const waitAndResult = async (ms, res) => {
+    await snooze(ms);
+    return res;
+}
 
 // expose your method to other services or actions
 const API = {
