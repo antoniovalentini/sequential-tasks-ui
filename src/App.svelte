@@ -1,8 +1,9 @@
 <script>
   import API from "./services/api";
   import ListItem from "./components/ListItem.svelte";
+  import { fade } from 'svelte/transition';
 
-  let finish = "";
+  let finished = false;
   let queue = [];
 
   let steps = [
@@ -14,7 +15,7 @@
 
   async function handleClick() {
     queue = [];
-    finish = "";
+    finished = false;
 
     for (let i = 0; i < steps.length; i++) {
       const step = steps[i];
@@ -28,7 +29,7 @@
       queue[i] = { name: stepName, result: `${result}` };
     }
 
-    finish = "FINISH!";
+    finished = true;
   }
 </script>
 
@@ -49,5 +50,8 @@
       </ul>
     </div>
   </div>
-  <h2>{finish}</h2>
+  {#if finished}
+  <h2 transition:fade>FINISH!</h2>
+{/if}
+  
 </div>
