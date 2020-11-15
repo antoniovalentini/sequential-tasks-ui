@@ -1,40 +1,61 @@
 <script>
-	import API from "./services/api";
+  import API from "./services/api";
 
-	let name = "world";
-	let queue = [];
+  let finish = "";
+  let queue = [];
 
-	let steps = [
-		() => API.step1(),
-		() => API.step2(),
-		() => API.step3(),
-		() => API.step4(),
-	];
+  let steps = [
+    () => API.step1(),
+    () => API.step2(),
+    () => API.step3(),
+    () => API.step4(),
+  ];
 
-	async function handleClick() {
+  async function handleClick() {
+    for (let i = 0; i < steps.length; i++) {
+      const step = steps[i];
+      const stepName = `Step ${i + 1}`;
 
-		for (let i = 0; i < steps.length; i++) {
-			const step = steps[i];
-			const stepName = `step${i+1}`;
+      queue.push({ name: stepName, result: "..." });
+      queue = queue;
 
-			queue.push({ name: stepName, result: "..." });
-			queue = queue;
+      var result = await step();
 
-			var result = await step();
+      queue[i] = { name: stepName, result: `${result}` };
+    }
 
-			queue[i] = { name: stepName, result: `[${result}]` };
-		}
+    finish = "FINISH!";
+  }
 
-		console.log("FINISH!");
-	}
+  function PickResultColor(msg) {
+    if (msg == "...") return "text-muted";
+    return msg == "SUCCESS" ? "text-success" : "text-danger";
+  }
 </script>
 
-<h1>Hello {name}!</h1>
+<style>
+  @import url("https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css");
+</style>
 
-<button on:click={handleClick}> Count </button>
+<div class="ml-2">
+  <button class="btn btn-secondary mb-3" on:click={handleClick}>
+    Start!
+  </button>
 
-<ul>
-	{#each queue as { name, result }}
-		<li>{name} - {result}</li>
-	{/each}
-</ul>
+  <div class="row">
+    <div class="col-md-3">
+      <ul class="list-group mb-3">
+        {#each queue as { name, result }}
+          <li
+            class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0">{name}</h6>
+            </div>
+            <span class={PickResultColor(result)}>{result}</span>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </div>
+  <h2>{finish}</h2>
+</div>
