@@ -1,5 +1,6 @@
 <script>
   import API from "./services/api";
+  import ListItem from "./components/ListItem.svelte";
 
   let finish = "";
   let queue = [];
@@ -12,6 +13,9 @@
   ];
 
   async function handleClick() {
+    queue = [];
+    finish = "";
+
     for (let i = 0; i < steps.length; i++) {
       const step = steps[i];
       const stepName = `Step ${i + 1}`;
@@ -26,11 +30,6 @@
 
     finish = "FINISH!";
   }
-
-  function PickResultColor(msg) {
-    if (msg == "...") return "text-muted";
-    return msg == "SUCCESS" ? "text-success" : "text-danger";
-  }
 </script>
 
 <style>
@@ -41,18 +40,11 @@
   <button class="btn btn-secondary mb-3" on:click={handleClick}>
     Start!
   </button>
-
   <div class="row">
     <div class="col-md-3">
       <ul class="list-group mb-3">
         {#each queue as { name, result }}
-          <li
-            class="list-group-item d-flex justify-content-between lh-condensed">
-            <div>
-              <h6 class="my-0">{name}</h6>
-            </div>
-            <span class={PickResultColor(result)}>{result}</span>
-          </li>
+          <ListItem {name} {result} />
         {/each}
       </ul>
     </div>
