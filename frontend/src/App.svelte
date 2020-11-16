@@ -8,9 +8,9 @@
   let queue = [];
 
   let steps = [
-    () => API.step1(),
-    () => API.step2(),
-    () => API.step3(),
+    () => API.getSuccess(),
+    () => API.getFailed(),
+    () => API.getException(),
     () => API.step4(),
   ];
 

@@ -31,6 +31,15 @@ namespace SequentialTaskUi.Backend.Controllers
                 Error = $"{nameof(GetFailed)} has encountered and error and returned in ~{waitTime}ms.",
             };
         }
+        
+        [HttpGet]
+        public PlaceHolder GetException()
+        {
+            var rng = new Random();
+            var waitTime = rng.Next(200, 700);
+            Thread.Sleep(waitTime);
+            throw new Exception($"{nameof(GetException)} has thrown an exceptionm after ~{waitTime}ms.");
+        }
     }
 
     public class PlaceHolder : GenericResponse

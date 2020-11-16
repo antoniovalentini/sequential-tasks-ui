@@ -3,7 +3,6 @@
   export let result;
 
   function PickResultColor(result) {
-    console.log(result.error);
     return result.error ? "text-danger" : "text-success";
   }
 </script>

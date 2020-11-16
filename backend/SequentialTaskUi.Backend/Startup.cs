@@ -35,6 +35,11 @@ namespace SequentialTaskUi.Backend
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(p => 
+                p.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
